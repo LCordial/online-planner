@@ -1,0 +1,14 @@
+{
+  "name": "online-planner",
+  "version": "1.0.0",
+  "description": "An online planner used to insert tasks and due dates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "sass": "^1.32.8"
+  }
+}
