@@ -1,6 +1,6 @@
 # Online Planner
 
-> An online digitial planner for students/teachers and people to add tasks and due dates
+> An online digital planner for students/teachers and people to add tasks and due dates
 
 # Packages
 
