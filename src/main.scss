@@ -1,0 +1,19 @@
+// sass --watch ./src/main.scss ./public/main.css
+
+@import './config/fonts';
+@import './config/mixin';
+
+@import './global/global';
+
+@import './components/login';
+
+
+.title{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    backface-visibility: hidden;
+    border-radius: 5px;
+}
