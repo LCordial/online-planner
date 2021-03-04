@@ -1,9 +1,45 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Planner in Progess</title>
 
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+
+        <link rel="stylesheet" href="./main.css">
+
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyDvw4MsI9XNcsIeD5On8QuC69efQRMO9io",
+                authDomain: "onlineplanner-47b44.firebaseapp.com",
+                projectId: "onlineplanner-47b44",
+                storageBucket: "onlineplanner-47b44.appspot.com",
+                messagingSenderId: "557051248055",
+                appId: "1:557051248055:web:a73fe53d39610b13a3fc32"
+        };
+        </script>
     </head>
 
     <body>
-        
+        <div id="page">
+            <!-- <h1 class="title">In progress</h1> -->
+            <div id="login-page" class="login">
+                <div>
+                    <input type="email" placeholder="Email" id="emailInput">
+                    <input type="password" placeholder="Password" id="passwordInput">
+                    <input type="text" placeholder="Username" id="usernameInput">
+                    <button id="signInBtn">Sign In</button>
+                </div>
+            </div>
+
+            <div>
+                <button id="signUpBtn">Sign up</button>
+            </div>
+
+            <button id="signOutBtn">Log Out</button>
+
+        </div>
     </body>
 </html>
