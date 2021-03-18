@@ -9,6 +9,7 @@
   "author": "Eli B",
   "license": "MIT",
   "dependencies": {
+    "normalize-scss": "^7.0.1",
     "sass": "^1.32.8"
   }
 }

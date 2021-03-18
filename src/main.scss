@@ -6,7 +6,8 @@
 @import './global/global';
 
 @import './components/login';
-
+@import './components/animation';
+@import './components/footer';
 
 .title{
     position: absolute;
@@ -16,4 +17,20 @@
     text-align: center;
     backface-visibility: hidden;
     border-radius: 5px;
+}
+
+.maintitle{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    backface-visibility: hidden;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    font-size: 5em;
+}
+
+.noopacity{
+    opacity: 0;
 }

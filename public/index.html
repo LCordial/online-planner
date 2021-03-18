@@ -4,11 +4,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Planner in Progess</title>
 
+        <link rel="stylesheet" href="./main.css">
+
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
-
-        <link rel="stylesheet" href="./main.css">
 
         <script>
             const firebaseConfig = {
@@ -19,27 +19,35 @@
                 messagingSenderId: "557051248055",
                 appId: "1:557051248055:web:a73fe53d39610b13a3fc32"
         };
+        firebase.initializeApp(firebaseConfig);
         </script>
     </head>
 
     <body>
-        <div id="page">
-            <h1 class="title">In progress</h1>
-            <!-- <div id="login-page" class="login">
-                <div>
-                    <input type="email" placeholder="Email" id="emailInput">
-                    <input type="password" placeholder="Password" id="passwordInput">
-                    <input type="text" placeholder="Username" id="usernameInput">
-                    <button id="signInBtn">Sign In</button>
+        <div">
+        <!-- <h1 class="title">In progress</h1> -->
+            <h1 class="title titleanimation noopacity">Welcome</h1>
+
+                <div id="loginPage" class="loginanimation">
+                    <h1 class="maintitle">Planner</h1>
+                    <div class="flexcontainer">
+                        <div id="inputPage" class="inputcontainer">
+                            <input type="email" placeholder="Email" id="emailInput" class="logininputs">
+                            <input type="password" placeholder="Password" id="passwordInput" class="logininputs">
+                            <input type="text" placeholder="Username" id="usernameInput" class="logininputs">
+                        </div>
+                        <div id="buttonPage" class="buttoncontainer"> 
+                            <button id="signInBtn" class="button">Sign In</button>
+                            <button id="signUpBtn" class="button loginanimation">Sign up</button>
+                        </div>
+                        <button id="signOutBtn" class="button loginanimation">Log Out</button> 
+                        <div class="footer">
+                            <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
+                            <p>Released by <a href="https://github.com/Ambience-Studios">Ambience Studios</a></p>
+                        </div> 
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <button id="signUpBtn">Sign up</button>
-            </div>
-
-            <button id="signOutBtn">Log Out</button> -->
-
-        </div>
+        <script src="index.js"></script>
     </body>
 </html>

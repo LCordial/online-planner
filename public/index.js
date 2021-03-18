@@ -1,10 +1,18 @@
-const loginPage = document.querySelector('#login-page');
+// Assigning variables
+
+const loginPage = document.querySelector('#loginPage');
+const inputPage = document.querySelector('#inputPage');
+const buttonPage = document.querySelector("#buttonPage");
+
 const txtEmail = document.querySelector('#emailInput');
 const txtPassword = document.querySelector('#passwordInput');
 const txtUsername = document.querySelector('#usernameInput');
 const btnSignIn = document.querySelector('#signInBtn');
 const btnSignUp = document.querySelector('#signUpBtn');
 const btnSignOut = document.querySelector('#signOutBtn');
+
+// Firebase reference  
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -40,6 +48,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser);
         btnSignOut.classList.remove('hidden'); // Show logout button
+        inputPage.classList.add('hidden'); // Remove input page
+        buttonPage.classList.add("hidden"); //Remove button page
+        inputPage.classList.remove('inputcontainer'); // Remove container
+        buttonPage.classList.remove('buttoncontainer'); // Remove Container
+        btnSignUp.classList.add('hidden');
 
         // Check user exists in db
         users.doc(auth.currentUser.uid).get().then((doc) => {
@@ -57,8 +70,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     } else { // Confirm logout
         console.log('not logged in.');
+
         btnSignOut.classList.add('hidden');
         loginPage.classList.remove('hidden');
+        btnSignUp.classList.remove('hidden');
+        inputPage.classList.add('inputcontainer');
+        buttonPage.classList.add('buttoncontainer')
     }
 });
 
