@@ -1,36 +1,46 @@
+// Command for compiling scss into css everytime ^S is used
 // sass --watch ./src/main.scss ./public/main.css
 
-@import './config/fonts';
-@import './config/mixin';
+// Importing config scss files
+@import "./config/fonts";
+@import "./config/mixin";
 
-@import './global/global';
+// Importing global scss files
+@import "./global/global";
 
-@import './components/login';
-@import './components/animation';
-@import './components/footer';
+// Importing components for web page
+@import "./components/login";
+@import "./components/animation";
+@import "./components/footer";
+@import "./components/sidenav";
+@import "./components/burger";
 
-.title{
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    backface-visibility: hidden;
-    border-radius: 5px;
+// Importing 'pages'
+@import "./components/page";
+
+// Titles
+.title {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  backface-visibility: hidden;
+  border-radius: 5px;
 }
 
-.maintitle{
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%);
-    text-align: center;
-    backface-visibility: hidden;
-    border-radius: 5px;
-    color: rgb(0, 0, 0);
-    font-size: 5em;
+.maintitle {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  backface-visibility: hidden;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
 }
 
-.noopacity{
-    opacity: 0;
+// Redundent
+.noopacity {
+  opacity: 0;
 }

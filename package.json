@@ -11,5 +11,8 @@
   "dependencies": {
     "normalize-scss": "^7.0.1",
     "sass": "^1.32.8"
+  },
+  "devDependencies": {
+    "prettier": "2.2.1"
   }
 }
