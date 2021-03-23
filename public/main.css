@@ -209,6 +209,10 @@ a:hover {
     opacity: 1;
   }
 }
+#main {
+  transition: margin-left 0.5s;
+}
+
 .footer {
   padding-top: 10vh;
   text-align: center;
@@ -250,6 +254,7 @@ a:hover {
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
   color: #f1f1f1;
+  cursor: pointer;
 }
 
 /* Position and style the close button (top right corner) */
@@ -277,10 +282,31 @@ a:hover {
     font-size: 18px;
   }
 }
+#addTaskBtn:hover {
+  background-color: #a00909;
+}
+
+#addSubjectBtn:hover {
+  background-color: royalblue;
+}
+
+#signOutBtn:hover {
+  background-color: #31acff;
+}
+
+.logoutbutton {
+  background-color: black;
+  color: white;
+  border: hidden;
+  padding: 15px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
+}
+
 .box-shadow-menu {
   position: relative;
   padding-left: 1.25em;
-  margin-left: 1em;
 }
 
 .box-shadow-menu:before {
@@ -295,23 +321,6 @@ a:hover {
 }
 
 .box-shadow-menu:hover {
-  cursor: pointer;
-}
-
-.logoutbutton {
-  background-color: black;
-  color: white;
-  border: hidden;
-  padding: 15px 32px;
-  text-decoration: none;
-  font-size: 16px;
-  border: none;
-}
-
-.logoutbutton:hover {
-  background-color: #31acff;
-  transition: 0.5s;
-  border: solid 2px black;
   cursor: pointer;
 }
 

@@ -11,12 +11,58 @@ const btnSignIn = document.querySelector("#signInBtn");
 const btnSignUp = document.querySelector("#signUpBtn");
 const btnSignOut = document.querySelector("#signOutBtn");
 
+// Nav Bar
+const btnOpenSubjectWindow = document.querySelector("#btnOpenSubjectWindow");
+const openTaskWindowBtn = document.querySelector("#openTaskWindowBtn");
+
+// Add subject window
+const addSubjectWindow = document.querySelector("#addsubjectwindow");
+const btnAddSubject = document.querySelector("#btnAddSubject");
+
+// Add task window
+const addTaskWindow = document.querySelector("#addtaskwindow");
+const btnAddTask = document.querySelector("#btnAddTask");
+
+// Removing windows on start
+addSubjectWindow.classList.add("hidden"); //Removing add subject window
+addTaskWindow.classList.add("hidden"); //Removing add task window
+
 // Firebase reference
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
 const users = db.collection("users");
+
+// Open and close add subject window
+btnOpenSubjectWindow.addEventListener("click", (e) => {
+  let isClicked = false
+  if (isClicked == true){
+    addSubjectWindow.classList.add("hidden");
+    btnOpenSubjectWindow.innerHTML = "Add Subjects"
+    isClicked = false;
+  }
+  else if (isClicked == false){
+    addSubjectWindow.classList.remove("hidden");
+    btnOpenSubjectWindow.innerHTML = "Close Subjects"
+    isClicked = true;
+  }
+});
+
+// Open and close add task window
+openTaskWindowBtn.addEventListener("click", (e) => {
+  let isClicked = false
+  if (isClicked == true){
+    addTaskWindow.classList.add("hidden");
+    btnOpenTaskWindow.innerHTML = "Add Subjects"
+    isClicked = false;
+  }
+  else if (isClicked == false){
+    addTaskWindow.classList.remove("hidden");
+    btnOpenTaskWindow.innerHTML = "Close Subjects"
+    isClicked = true;
+  }
+});
 
 // Sign existing user in
 btnSignIn.addEventListener("click", (e) => {

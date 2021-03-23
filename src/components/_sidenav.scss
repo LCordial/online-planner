@@ -25,6 +25,7 @@
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
   color: #f1f1f1;
+  cursor: pointer;
 }
 
 /* Position and style the close button (top right corner) */
@@ -50,4 +51,27 @@
   .sidenav a {
     font-size: 18px;
   }
+}
+
+
+#addTaskBtn:hover{
+  background-color: rgb(160, 9, 9);
+}
+
+#addSubjectBtn:hover{
+  background-color: royalblue;
+}
+
+#signOutBtn:hover{
+ background-color: rgb(49, 172, 255);
+}
+
+.logoutbutton {
+  background-color: black;
+  color: white;
+  border: hidden;
+  padding: 15px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
 }

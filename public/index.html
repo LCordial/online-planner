@@ -54,18 +54,30 @@
 
                 <div id="appsidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <button id="signOutBtn" class="logoutbutton">Log Out</button> 
+                    <a id="btnOpenSubjectWindow">Add subject</a>
+                    <a id="openTaskWindowBtn">Add task</a>
+                    <a id="signOutBtn">Log Out</a> 
                 </div>
 
-                <div id="user">
-                    <p></p>
+                <div id="main">
+                    
+                    <p id="user">Place holder</p>
+
+                    <span onclick="openNav()" class="box-shadow-menu"></span>
+
+                    <div id="addsubjectwindow">
+                        <p>Add subject</p>
+                        <input>
+                        <button id="btnAddSubject">Submit</button>
+                    </div>
+                    
+                    <div id="addtaskwindow">
+                        <p>Add Task</p>
+                        <input>
+                        <button id="btnAddTask">Submit</button>
+                    </div>
                 </div>
 
-                <span onclick="openNav()" class="box-shadow-menu"></span>
-
-                <div id="mainPage">
-
-                </div>
 
         <script src="index.js"></script>
         <script src="js/sidebar.js"></script>
