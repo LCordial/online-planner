@@ -11,6 +11,12 @@ const btnSignIn = document.querySelector("#signInBtn");
 const btnSignUp = document.querySelector("#signUpBtn");
 const btnSignOut = document.querySelector("#signOutBtn");
 
+// HTML Elements
+let subjectInputError = document.querySelector("#subjectinputerror");
+let userDisplay = document.querySelector("#user");
+let burger = document.querySelector("#burger");
+let displayUser = document.querySelector("#user");
+
 // Nav Bar
 const btnOpenSubjectWindow = document.querySelector("#btnOpenSubjectWindow");
 const openTaskWindowBtn = document.querySelector("#openTaskWindowBtn");
@@ -37,23 +43,6 @@ const db = firebase.firestore();
 
 const users = db.collection("users");
 
-// Open and close add subject window
-btnOpenSubjectWindow.addEventListener("click", (e) => {
-  var isClicked = true;
-  switch (isClicked) {
-    case isClicked === false:
-      addSubjectWindow.classList.add("hidden");
-      btnOpenSubjectWindow.innerHTML = "Add Subjects";
-      isClicked = true;
-      console.log(isClicked);
-    case isClicked === true:
-      addSubjectWindow.classList.remove("hidden");
-      btnOpenSubjectWindow.innerHTML = "Close Subjects";
-      isClicked = false;
-      console.log(isClicked);
-      break;
-  }
-});
 
 btnAddSubject.addEventListener("click", (e) => {
   writeSubjectToDB();
@@ -89,23 +78,22 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
   if (firebaseUser) {
     console.log(firebaseUser);
     btnSignOut.classList.remove("hidden"); // Show logout button
-    // loginPage.classList.add("hidden");
-    inputPage.classList.add("hidden"); // Remove input page
-    buttonPage.classList.add("hidden"); //Remove button page
     inputPage.classList.remove("inputcontainer"); // Remove container
     buttonPage.classList.remove("buttoncontainer"); // Remove Container
     footer.classList.add("hidden");
     btnSignUp.classList.add("hidden");
+    burger.classList.remove("hidden");
+    displayUser.classList.remove("hidden");
 
     // Check user exists in db
     users
       .doc(auth.currentUser.uid)
       .get()
-      .then((doc) => {
+      .then((doc) => { // If the user exists on the database...
         if (doc.exists) {
-          // User exists
           console.log("Document data:", doc.data());
-        } else {
+          getUsername();
+        } else { // If user doesn't exists on the databse...
           // Add user data to db
           console.log("No such document!");
           writeUserToDB();
@@ -122,10 +110,14 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     console.log("not logged in.");
 
     btnSignOut.classList.add("hidden");
+    burger.classList.add("hidden");
+    displayUser.classList.add("hidden");
     loginPage.classList.remove("hidden");
     btnSignUp.classList.remove("hidden");
     inputPage.classList.add("inputcontainer");
     buttonPage.classList.add("buttoncontainer");
+
+    closeNav();
   }
 });
 
@@ -156,23 +148,46 @@ function writeUserToDB() {
 function writeSubjectToDB() {
   let subject = txtSubejct.value;
 
-  if (txtSubejct.value.length == 0) {
+  if (txtSubejct.value.length == 0) { //Is the field empty?
     console.log("Field needs to be filled in");
-  } else {
-    // let current = new Date();
-    users
-      .doc(auth.currentUser.uid)
-      .collection("subjects")
-      .doc(subject)
-      .set({
+    subjectInputError.innerHTML = "Subject needs a name";
+
+  } else { // If not...
+    users // Access users collection
+      .doc(auth.currentUser.uid) // Access user UID
+      .collection("subjects") // Access/Create Subjects collection
+      .doc(subject) // Add a document named with user choice
+      .set({ // Set document fields to...
         // Write to db
         subject: subject,
       })
-      .then(() => {
+      .then(() => { // Once it successfully was written...
         console.log("Subject successfully written with:", subject);
+        subjectInputError.innerHTML = "";
       })
-      .catch((error) => {
+      .catch((error) => { // If it catches an error...
         console.error("Error writing document: ", error);
+        subjectInputError.innerHTML = "Error unknown!";
       });
   }
+}
+
+  function getUsername(){
+  users
+  .doc(auth.currentUser.uid)
+  .get()
+  .then((doc) => { // If the user exists on the database...
+    if (doc.exists) {
+      userDisplay.innerHTML = doc.data().username;
+    } else { // If user doesn't exists on the databse...
+      console.log("Username doesn't exist");
+      userDisplay.innerHTML = "";
+    }
+
+    loginPage.classList.add("hidden");
+  })
+  .catch((error) => {
+    // Catch any errors
+    console.log("Error getting document:", error);
+  });
 }

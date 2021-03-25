@@ -10,6 +10,8 @@
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
 
+        <script src="js/window.js"></script>
+
         <script>
             const firebaseConfig = {
                 apiKey: "AIzaSyDvw4MsI9XNcsIeD5On8QuC69efQRMO9io",
@@ -54,26 +56,28 @@
 
                 <div id="appsidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a id="btnOpenSubjectWindow">Add subject</a>
-                    <a id="openTaskWindowBtn">Add task</a>
+                    <a id="btnOpenSubjectWindow" onclick="openSubjectWindow()">Add subject</a>
+                    <a id="openTaskWindowBtn" onclick="openTaskWindow()">Add task</a>
                     <a id="signOutBtn">Log Out</a> 
                 </div>
 
                 <div id="main">
                     
-                    <p id="user">Place holder</p>
+                    <p id="user">Undefined User</p>
 
-                    <span onclick="openNav()" class="box-shadow-menu"></span>
+                    <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
 
                     <div id="addsubjectwindow">
                         <p>Add subject</p>
                         <input id="subjectInput" placeholder="Subject">
+                        <p id="subjectinputerror" class="red"></p>
                         <button id="btnAddSubject">Submit</button>
                     </div>
                     
                     <div id="addtaskwindow">
-                        <p>Add Task</p>
-                        <input>
+                        <p>Add subject</p>
+                        <input id="taskInput" placeholder="Task">
+                        <p id="taskinputerror" class="red"></p>
                         <button id="btnAddTask">Submit</button>
                     </div>
                 </div>

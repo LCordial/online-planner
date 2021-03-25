@@ -4,6 +4,7 @@
 // Importing config scss files
 @import "./config/fonts";
 @import "./config/mixin";
+@import "./config/colours";
 
 // Importing global scss files
 @import "./global/global";
@@ -14,12 +15,13 @@
 @import "./components/footer";
 @import "./components/sidenav";
 @import "./components/burger";
+@import "./components/user";
 
 // Importing 'pages'
-@import "./components/page";
+@import "./components/windows/page";
 
 // Importing 'windows'
-@import "./components/windows";
+@import "./components//windows/windows";
 
 // Titles
 .title {
