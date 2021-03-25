@@ -19,6 +19,9 @@ const openTaskWindowBtn = document.querySelector("#openTaskWindowBtn");
 const addSubjectWindow = document.querySelector("#addsubjectwindow");
 const btnAddSubject = document.querySelector("#btnAddSubject");
 
+// Subjects
+const txtSubejct = document.querySelector("#subjectInput");
+
 // Add task window
 const addTaskWindow = document.querySelector("#addtaskwindow");
 const btnAddTask = document.querySelector("#btnAddTask");
@@ -36,32 +39,24 @@ const users = db.collection("users");
 
 // Open and close add subject window
 btnOpenSubjectWindow.addEventListener("click", (e) => {
-  let isClicked = false
-  if (isClicked == true){
-    addSubjectWindow.classList.add("hidden");
-    btnOpenSubjectWindow.innerHTML = "Add Subjects"
-    isClicked = false;
-  }
-  else if (isClicked == false){
-    addSubjectWindow.classList.remove("hidden");
-    btnOpenSubjectWindow.innerHTML = "Close Subjects"
-    isClicked = true;
+  var isClicked = true;
+  switch (isClicked) {
+    case isClicked === false:
+      addSubjectWindow.classList.add("hidden");
+      btnOpenSubjectWindow.innerHTML = "Add Subjects";
+      isClicked = true;
+      console.log(isClicked);
+    case isClicked === true:
+      addSubjectWindow.classList.remove("hidden");
+      btnOpenSubjectWindow.innerHTML = "Close Subjects";
+      isClicked = false;
+      console.log(isClicked);
+      break;
   }
 });
 
-// Open and close add task window
-openTaskWindowBtn.addEventListener("click", (e) => {
-  let isClicked = false
-  if (isClicked == true){
-    addTaskWindow.classList.add("hidden");
-    btnOpenTaskWindow.innerHTML = "Add Subjects"
-    isClicked = false;
-  }
-  else if (isClicked == false){
-    addTaskWindow.classList.remove("hidden");
-    btnOpenTaskWindow.innerHTML = "Close Subjects"
-    isClicked = true;
-  }
+btnAddSubject.addEventListener("click", (e) => {
+  writeSubjectToDB();
 });
 
 // Sign existing user in
@@ -156,4 +151,28 @@ function writeUserToDB() {
       // Catch errors
       console.error("Error writing document: ", error);
     });
+}
+
+function writeSubjectToDB() {
+  let subject = txtSubejct.value;
+
+  if (txtSubejct.value.length == 0) {
+    console.log("Field needs to be filled in");
+  } else {
+    // let current = new Date();
+    users
+      .doc(auth.currentUser.uid)
+      .collection("subjects")
+      .doc(subject)
+      .set({
+        // Write to db
+        subject: subject,
+      })
+      .then(() => {
+        console.log("Subject successfully written with:", subject);
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  }
 }
