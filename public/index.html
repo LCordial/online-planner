@@ -12,17 +12,7 @@
 
         <script src="js/window.js"></script>
 
-        <script>
-            const firebaseConfig = {
-                apiKey: "AIzaSyDvw4MsI9XNcsIeD5On8QuC69efQRMO9io",
-                authDomain: "onlineplanner-47b44.firebaseapp.com",
-                projectId: "onlineplanner-47b44",
-                storageBucket: "onlineplanner-47b44.appspot.com",
-                messagingSenderId: "557051248055",
-                appId: "1:557051248055:web:a73fe53d39610b13a3fc32"
-        };
-        firebase.initializeApp(firebaseConfig);
-        </script>
+        <script src="config.js"></script>
     </head>
 
     <body>
@@ -68,6 +58,7 @@
                     <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
 
                     <div id="addsubjectwindow">
+                        <span onclick="openSubjectWindow()">X</span>
                         <p>Add subject</p>
                         <input id="subjectInput" placeholder="Subject">
                         <p id="subjectinputerror" class="red"></p>
@@ -75,8 +66,17 @@
                     </div>
                     
                     <div id="addtaskwindow">
+                        <span onclick="openTaskWindow()">X</span>
                         <p>Add subject</p>
                         <input id="taskInput" placeholder="Task">
+                        <select id="priorityselect" name="Priority">
+                            <option value="!">Priority 3</option>
+                            <option value="!!">Priority 2</option>
+                            <option value="!!!">Priority 1</option>
+                        </select>
+                        <select id="subjectselect" name="Subject">
+                            <option value="devtest">Test</option>
+                        </select>
                         <p id="taskinputerror" class="red"></p>
                         <button id="btnAddTask">Submit</button>
                     </div>

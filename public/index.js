@@ -13,6 +13,7 @@ const btnSignOut = document.querySelector("#signOutBtn");
 
 // HTML Elements
 let subjectInputError = document.querySelector("#subjectinputerror");
+let taskInputError = document.querySelector("#taskinputerror")
 let userDisplay = document.querySelector("#user");
 let burger = document.querySelector("#burger");
 let displayUser = document.querySelector("#user");
@@ -27,6 +28,10 @@ const btnAddSubject = document.querySelector("#btnAddSubject");
 
 // Subjects
 const txtSubejct = document.querySelector("#subjectInput");
+
+//Tasks
+const txtTask = document.querySelector("#taskInput");
+// const txtPriority = document.querySelector("priorityselect");
 
 // Add task window
 const addTaskWindow = document.querySelector("#addtaskwindow");
@@ -43,10 +48,13 @@ const db = firebase.firestore();
 
 const users = db.collection("users");
 
-
 btnAddSubject.addEventListener("click", (e) => {
   writeSubjectToDB();
 });
+
+btnAddTask.addEventListener("click", (e) => {
+  writeTasktoDB();
+})
 
 // Sign existing user in
 btnSignIn.addEventListener("click", (e) => {
@@ -89,11 +97,14 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     users
       .doc(auth.currentUser.uid)
       .get()
-      .then((doc) => { // If the user exists on the database...
+      .then((doc) => {
+        // If the user exists on the database...
         if (doc.exists) {
           console.log("Document data:", doc.data());
           getUsername();
-        } else { // If user doesn't exists on the databse...
+          openNav()
+        } else {
+          // If user doesn't exists on the databse...
           // Add user data to db
           console.log("No such document!");
           writeUserToDB();
@@ -114,8 +125,6 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     displayUser.classList.add("hidden");
     loginPage.classList.remove("hidden");
     btnSignUp.classList.remove("hidden");
-    inputPage.classList.add("inputcontainer");
-    buttonPage.classList.add("buttoncontainer");
 
     closeNav();
   }
@@ -126,6 +135,8 @@ function writeUserToDB() {
   let username = txtUsername.value;
   let uid = auth.currentUser.uid;
   let email = txtEmail.value;
+
+  getUsername();
 
   users
     .doc(uid)
@@ -148,46 +159,83 @@ function writeUserToDB() {
 function writeSubjectToDB() {
   let subject = txtSubejct.value;
 
-  if (txtSubejct.value.length == 0) { //Is the field empty?
+  if (txtSubejct.value.length == 0) {
+    //Is the field empty?
     console.log("Field needs to be filled in");
     subjectInputError.innerHTML = "Subject needs a name";
-
-  } else { // If not...
+  } else {
+    // If not...
     users // Access users collection
       .doc(auth.currentUser.uid) // Access user UID
       .collection("subjects") // Access/Create Subjects collection
       .doc(subject) // Add a document named with user choice
-      .set({ // Set document fields to...
+      .set({
+        // Set document fields to...
         // Write to db
         subject: subject,
       })
-      .then(() => { // Once it successfully was written...
+      .then(() => {
+        // Once it successfully was written...
         console.log("Subject successfully written with:", subject);
         subjectInputError.innerHTML = "";
       })
-      .catch((error) => { // If it catches an error...
+      .catch((error) => {
+        // If it catches an error...
         console.error("Error writing document: ", error);
         subjectInputError.innerHTML = "Error unknown!";
       });
   }
 }
 
-  function getUsername(){
-  users
-  .doc(auth.currentUser.uid)
-  .get()
-  .then((doc) => { // If the user exists on the database...
-    if (doc.exists) {
-      userDisplay.innerHTML = doc.data().username;
-    } else { // If user doesn't exists on the databse...
-      console.log("Username doesn't exist");
-      userDisplay.innerHTML = "";
-    }
+function writeTasktoDB(){
+  let task = txtTask.value;
+  var e = document.querySelector("#priorityselect").value;
+  var i = document.querySelector("#subjectselect").value;
 
-    loginPage.classList.add("hidden");
-  })
-  .catch((error) => {
-    // Catch any errors
-    console.log("Error getting document:", error);
-  });
+  console.log(task);
+
+  if(txtTask.value.length == 0){
+    console.log("Field needs to be filled in");
+    taskInputError.innerHTML = "Task needs a name"
+  }else{
+    users
+      .doc(auth.currentUser.uid)
+      .collection("tasks")
+      .doc(task)
+      .set({
+        task: task,
+        subject: i,
+        priority: e,
+      })
+  }
+}
+
+// Getting Username on start and login
+
+function getUsername() {
+  users
+    .doc(auth.currentUser.uid)
+    .get()
+    .then((doc) => {
+      // If the user exists on the database...
+      if (doc.exists) {
+        userDisplay.innerHTML = doc.data().username;
+      } else {
+        // If user doesn't exists on the databse...
+        console.log("Username doesn't exist");
+        userDisplay.innerHTML = "";
+      }
+
+      loginPage.classList.add("hidden");
+    })
+    .catch((error) => {
+      // Catch any errors
+      console.log("Error getting document:", error);
+    });
+}
+
+function updatedSubjectSelect(){
+  for(i = 1; i > 0; i++){
+    
+  }
 }

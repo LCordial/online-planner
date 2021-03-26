@@ -2,3 +2,5 @@
 /.firebase
 
 /firebase-debug.log
+
+/public/config.js
