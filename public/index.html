@@ -13,6 +13,9 @@
         <script src="js/window.js"></script>
 
         <script src="config.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     </head>
 
     <body>
@@ -21,7 +24,7 @@
             <!-- <h1 class="title titleanimation noopacity">Welcome</h1> -->
 
                 <div id="loginPage" class="loginanimation">
-                    <!-- <h1 class="maintitle">Planner</h1> -->
+                    <h1 class="maintitle">Planner</h1>
                     <div class="flexcontainer">
                         <div id="inputPage" class="inputcontainer">
                             <input type="email" placeholder="Email" id="emailInput" class="logininputs">
@@ -32,17 +35,9 @@
                             <button id="signInBtn" class="button">Sign In</button>
                             <button id="signUpBtn" class="button loginanimation">Sign up</button>
                         </div>
-                        <div id="mainfooter" class="footer">
-                            <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
-                            <p>Released by <a href="https://github.com/Ambience-Studios">Ambience Studios</a></p>
-                        </div> 
+                        <p id="signInError" class="red center"></p>
                     </div>
                 </div>
-
-                <!-- <div class="footer">
-                    <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
-                    <p>Released by <a href="https://github.com/Ambience-Studios">Ambience Studios</a></p>
-                </div>  -->
 
                 <div id="appsidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -58,7 +53,7 @@
                     <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
 
                     <div id="addsubjectwindow">
-                        <span onclick="openSubjectWindow()">X</span>
+                        <span onclick="openSubjectWindow()">&times</span>
                         <p>Add subject</p>
                         <input id="subjectInput" placeholder="Subject">
                         <p id="subjectinputerror" class="red"></p>
@@ -66,8 +61,8 @@
                     </div>
                     
                     <div id="addtaskwindow">
-                        <span onclick="openTaskWindow()">X</span>
-                        <p>Add subject</p>
+                        <span onclick="openTaskWindow()">&times</span>
+                        <p>Add task</p>
                         <input id="taskInput" placeholder="Task">
                         <select id="priorityselect" name="Priority">
                             <option value="!">Priority 3</option>
@@ -75,16 +70,21 @@
                             <option value="!!!">Priority 1</option>
                         </select>
                         <select id="subjectselect" name="Subject">
-                            <option value="devtest">Test</option>
                         </select>
                         <p id="taskinputerror" class="red"></p>
                         <button id="btnAddTask">Submit</button>
                     </div>
                 </div>
 
+                
+                <div id="mainfooter" class="footer">
+                    <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
+                    <p>Released by <a href="https://github.com/Ambience-Studios">Ambience Studios</a></p>
+                </div> 
 
         <script src="index.js"></script>
         <script src="js/sidebar.js"></script>
+        <script src="js/moveable.js"></script>
 
     </body>
 </html>

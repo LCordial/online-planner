@@ -1,6 +1,10 @@
 #loginPage {
   width: 30%;
-  transform: translateX(120%);
+  transform: translate(90%, 30%);
+  background-color: rgb(236, 236, 236);
+  border: 2px solid #5aa7de;
+  padding: 2em;
+  border-radius: 5px;
 }
 
 .button {
@@ -18,7 +22,6 @@
   color: white;
   transition: 0.5s;
   border-radius: 1em;
-  border: solid 2px black;
 }
 
 .flexcontainer {
