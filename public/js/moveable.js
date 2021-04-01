@@ -1,4 +1,4 @@
-$(function() {
-    $( "#addtaskwindow" ).draggable();
-    $( "#addsubjectwindow" ).draggable();
-})
+$(function () {
+  $("#addtaskwindow").draggable();
+  $("#addsubjectwindow").draggable();
+});

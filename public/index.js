@@ -18,8 +18,10 @@ let displayUser = document.querySelector("#user"); // The display user
 let signInError = document.querySelector("#signInError"); // The sign in error text
 
 // Nav Bar
-const btnOpenSubjectWindow = document.querySelector("#btnOpenSubjectWindow"); // Open subject window 
+const btnOpenSubjectWindow = document.querySelector("#btnOpenSubjectWindow"); // Open subject window
 const openTaskWindowBtn = document.querySelector("#openTaskWindowBtn"); // Opens the task window
+
+//#region SUBJECTS
 
 // Add subject window
 const addSubjectWindow = document.querySelector("#addsubjectwindow"); // The add subject window
@@ -30,6 +32,12 @@ const txtSubejct = document.querySelector("#subjectInput"); // The subject input
 var txtPriority = document.querySelector("#priorityselect"); // The priority of the input
 var txtSubject = document.querySelector("#subjectselect"); // The subject chosen
 
+var subjectArray = []; // Subject Array
+
+//#endregion
+
+//#region TASK
+
 //Tasks
 const txtTask = document.querySelector("#taskInput"); // The task input
 
@@ -37,11 +45,17 @@ const txtTask = document.querySelector("#taskInput"); // The task input
 const addTaskWindow = document.querySelector("#addtaskwindow"); // The add task window
 const btnAddTask = document.querySelector("#btnAddTask"); // The add task window
 
+//#endregion
+
+//#region EDIT SUBJECTS
+
+const editSubjectWindow = document.querySelector("#deletesubjectwindow")
+
+//#endregion
+
 // Removing windows on start
 addSubjectWindow.classList.add("hidden"); //Removing add subject window
 addTaskWindow.classList.add("hidden"); //Removing add task window
-
-var subjectArray = [] // Subject Array
 
 // Firebase reference
 
@@ -49,6 +63,8 @@ const auth = firebase.auth(); // The authenticator for firebase
 const db = firebase.firestore(); // The firebase firestore database
 
 const users = db.collection("users"); // THe user collection
+
+///////////// THE ACTUAL CODE AND NOT VARIABLES \\\\\\\\\\\\\\\
 
 btnAddSubject.addEventListener("click", (e) => {
   writeSubjectToDB();
@@ -63,17 +79,16 @@ btnSignIn.addEventListener("click", (e) => {
   let email = txtEmail.value;
   let password = txtPassword.value;
 
-  if(email.length == 0 || password.length == 0){
-    signInError.innerHTML = "Incorrect Email/Password"
-  }else{
-    signInError.innerHTML = ""
+  if (email.length == 0 || password.length == 0) {
+    signInError.innerHTML = "Incorrect Email/Password";
+  } else {
+    signInError.innerHTML = "";
     const promise = auth.signInWithEmailAndPassword(email, password);
     promise.catch((e) => {
-      console.log(e.message)
-      signInError.innerHTML = "Incorrect Email/Password"
+      console.log(e.message);
+      signInError.innerHTML = "Incorrect Email/Password";
     });
   }
-
 });
 
 // Sign up existing user
@@ -82,9 +97,9 @@ btnSignUp.addEventListener("click", (e) => {
   let email = txtEmail.value;
   let password = txtPassword.value;
 
-  if(email.length == 0 || password.length < 6){
-    signInError.innerHTML = "It needs an Email/Password"
-  }else{
+  if (email.length == 0 || password.length < 6) {
+    signInError.innerHTML = "It needs an Email/Password";
+  } else {
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise.catch((e) => console.log(e.message));
   }
@@ -101,10 +116,10 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
   if (firebaseUser) {
     console.log(firebaseUser);
     btnSignOut.classList.remove("hidden"); // Show logout button
-    btnSignUp.classList.add("hidden");
-    burger.classList.remove("hidden");
-    displayUser.classList.remove("hidden");
-    footer.classList.add("hidden")
+    btnSignUp.classList.add("hidden"); // Hide sign up button
+    burger.classList.remove("hidden"); // Showing the burger
+    displayUser.classList.remove("hidden"); // Showing the display user
+    footer.classList.add("hidden"); // Hiding the footer
 
     // Check user exists in db
     users
@@ -116,7 +131,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
           console.log("Document data:", doc.data());
           getUsername();
           openNav();
-          updatedSubjectSelect();
+          updateOnStart();
         } else {
           // If user doesn't exists on the databse...
           // Add user data to db
@@ -178,8 +193,8 @@ function writeSubjectToDB() {
     console.log("Field needs to be filled in");
     subjectInputError.innerHTML = "Subject needs a name";
   } else {
-      subjectArray.push(subject);
-      console.log(subjectArray);
+    subjectArray.push(subject);
+    console.log(subjectArray);
     // If not...
     users // Access users collection
       .doc(auth.currentUser.uid) // Access user UID
@@ -188,13 +203,13 @@ function writeSubjectToDB() {
       .update({
         // Set document fields to...
         // Write to db
-        "subject": firebase.firestore.FieldValue.arrayUnion(subject)
+        subject: firebase.firestore.FieldValue.arrayUnion(subject),
       })
       .then(() => {
         // Once it successfully was written...
         console.log("Subject successfully written with:", subject);
         subjectInputError.innerHTML = "";
-        updatedSubjectSelect()
+        updatedSubjectSelect();
       })
       .catch((error) => {
         // If it catches an error...
@@ -205,14 +220,12 @@ function writeSubjectToDB() {
 }
 
 // Writing task to the Database
-function writeTasktoDB(){
+function writeTasktoDB() {
   let task = txtTask.value;
   let priority = txtPriority.value;
-  let subject = txtSubejct.value;
+  let subject = txtSubject.value;
 
-  updatedSubjectSelect();
-
-  console.log(task);
+  console.log("Name:", task, "   Priority:", priority, "   Subject:", subject);
 
   if (txtTask.value.length == 0) {
     console.log("Field needs to be filled in");
@@ -228,7 +241,9 @@ function writeTasktoDB(){
 
 // Getting Username on start and login
 function getUsername() {
-  users.doc(auth.currentUser.uid).get()
+  users
+    .doc(auth.currentUser.uid)
+    .get()
     .then((doc) => {
       // If the user exists on the database...
       if (doc.exists) {
@@ -247,27 +262,69 @@ function getUsername() {
     });
 }
 
+function updatedTaskDisplay(){
+  users.doc(auth.currentUser.uid).collection("tasks")
+}
+
 // Getting the subjects that the user has entered
 function updatedSubjectSelect() {
-    users.doc(auth.currentUser.uid).collection("subjects").doc("User Subjects").get()
-      .then((doc) => {
-        console.log(doc.data().subject)
-        let subjects = doc.data().subject
-        console.log(subjects)
-      
-        for(i=0; i < subjects.length; i++){
+  users
+    .doc(auth.currentUser.uid)
+    .collection("subjects")
+    .doc("User Subjects")
+    .get()
+    .then((doc) => {
+      console.log(doc.data().subject); // Console logging the data of subject
+      let subjects = doc.data().subject; // Making the local subjects variable equal to the subject data
+      console.log(subjects); // Console logging the subjects to check if it works.
 
-          var option = document.createElement("option");
-          option.setAttribute("value", subjects[i])
-          var node = document.createTextNode(subjects[i]);
-          option.appendChild(node);
-          var element = document.querySelector("#subjectselect")
-          element.appendChild(option);
+      for (i = 0; i < subjects.length; i++) {
+        // Looping through each data thingy in the array
+
+        if (subjects[i] === txtSubejct.value) {
+          // Does the subject not exist on the array? If it doesn't than create new element
+
+          var option = document.createElement("option"); // Create an option element variable
+          option.value = subject; // Set a value to the html element
+          var node = document.createTextNode(subjects[i]); // Create text node (creating text) variable
+          option.appendChild(node); // Appending the text node to the option
+          var element = document.querySelector("#subjectselect"); // The element of which it will be created in
+          element.appendChild(option); // Appending the option with the text node and attribute to the element
 
           console.log(option);
+        } else {
+          // Do nothing
+          console.log("Nothing edited");
         }
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+}
+
+// A general function that updates 'almost' everything on start of application \\
+function updateOnStart() {
+  users
+    .doc(auth.currentUser.uid)
+    .collection("subjects")
+    .doc("User Subjects")
+    .get()
+    .then((doc) => {
+      let subjects = doc.data().subject;
+
+      for (i = 0; i < subjects.length; i++) {
+        var option = document.createElement("option");
+        option.value = subjects[i];
+        var node = document.createTextNode(subjects[i]);
+        option.appendChild(node);
+        var element = document.querySelector("#subjectselect");
+        element.appendChild(option);
+        console.log(option);
+        console.log("Nothing edited");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
 }

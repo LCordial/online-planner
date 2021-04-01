@@ -1,5 +1,6 @@
 var isSubjectClicked = true;
 var isTaskClicked = true;
+var isEditSubjectClicked = true;
 
 function openSubjectWindow() {
   if (isSubjectClicked === true) {
@@ -26,5 +27,13 @@ function openTaskWindow() {
     addTaskWindow.classList.add("hidden");
     openTaskWindowBtn.innerHTML = "Add Tasks";
     isTaskClicked = true;
+  }
+}
+
+function openEditSubjectWindow(){
+  if(isEditSubjectClicked === true){
+    isEditSubjectClicked = false;
+  } else if (isEditSubjectClicked = false){
+    isEditSubjectClicked = true;
   }
 }

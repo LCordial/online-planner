@@ -42,6 +42,7 @@
                 <div id="appsidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a id="btnOpenSubjectWindow" onclick="openSubjectWindow()">Add subject</a>
+                    <a id="btnOpenEditSubjectWindow" onclick="openEditSubjectWindow()">Edit Subjects</a>
                     <a id="openTaskWindowBtn" onclick="openTaskWindow()">Add task</a>
                     <a id="signOutBtn">Log Out</a> 
                 </div>
@@ -70,10 +71,15 @@
                             <option value="!!!">Priority 1</option>
                         </select>
                         <select id="subjectselect" name="Subject">
+                            <option value="">Select Subject</option>
                         </select>
                         <p id="taskinputerror" class="red"></p>
                         <button id="btnAddTask">Submit</button>
                     </div>
+                </div>
+
+                <div id="deletesubjectwindow">
+
                 </div>
 
                 
