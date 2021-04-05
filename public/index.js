@@ -33,6 +33,7 @@ var txtPriority = document.querySelector("#priorityselect"); // The priority of 
 var txtSubject = document.querySelector("#subjectselect"); // The subject chosen
 
 var subjectArray = []; // Subject Array
+let taskDocuments = []; // Creating an array for the tasks [MUST BE GLOBAL!]
 
 //#endregion
 
@@ -49,13 +50,22 @@ const btnAddTask = document.querySelector("#btnAddTask"); // The add task window
 
 //#region EDIT SUBJECTS
 
-const editSubjectWindow = document.querySelector("#deletesubjectwindow")
+const editSubjectWindow = document.querySelector("#deletesubjectwindow");
+const btnOpenEditSubjectWindow = document.querySelector(
+  "#btnOpenEditSubjectWindow"
+);
 
 //#endregion
 
+//#region TODOLIST
+let toDoList = document.querySelector("#toDoList");
+//#endregion
+
 // Removing windows on start
-addSubjectWindow.classList.add("hidden"); //Removing add subject window
-addTaskWindow.classList.add("hidden"); //Removing add task window
+addSubjectWindow.classList.add("hidden"); // Removing add subject window
+addTaskWindow.classList.add("hidden"); // Removing add task window
+editSubjectWindow.classList.add("hidden"); // Removing edit subject window
+toDoList.classList.add("hidden");
 
 // Firebase reference
 
@@ -120,6 +130,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     burger.classList.remove("hidden"); // Showing the burger
     displayUser.classList.remove("hidden"); // Showing the display user
     footer.classList.add("hidden"); // Hiding the footer
+    toDoList.classList.remove("hidden");
 
     // Check user exists in db
     users
@@ -129,9 +140,10 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
         // If the user exists on the database...
         if (doc.exists) {
           console.log("Document data:", doc.data());
-          getUsername();
-          openNav();
-          updateOnStart();
+          getUsername(); // Getting the username on login
+          openNav(); // Opening the Nav bar on login
+          updateOnStart(); // Updating everything on start
+          fetchAllTasks()
         } else {
           // If user doesn't exists on the databse...
           // Add user data to db
@@ -154,6 +166,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     displayUser.classList.add("hidden");
     loginPage.classList.remove("hidden");
     btnSignUp.classList.remove("hidden");
+    toDoList.classList.add("hidden");
 
     closeNav();
   }
@@ -236,6 +249,7 @@ function writeTasktoDB() {
       subject: subject,
       priority: priority,
     });
+    updatedTaskDisplay()
   }
 }
 
@@ -262,10 +276,6 @@ function getUsername() {
     });
 }
 
-function updatedTaskDisplay(){
-  users.doc(auth.currentUser.uid).collection("tasks")
-}
-
 // Getting the subjects that the user has entered
 function updatedSubjectSelect() {
   users
@@ -285,13 +295,13 @@ function updatedSubjectSelect() {
           // Does the subject not exist on the array? If it doesn't than create new element
 
           var option = document.createElement("option"); // Create an option element variable
-          option.value = subject; // Set a value to the html element
+          option.value = subjects; // Set a value to the html element
           var node = document.createTextNode(subjects[i]); // Create text node (creating text) variable
           option.appendChild(node); // Appending the text node to the option
           var element = document.querySelector("#subjectselect"); // The element of which it will be created in
           element.appendChild(option); // Appending the option with the text node and attribute to the element
 
-          console.log(option);
+          console.log("Created HTML elements: ", option);
         } else {
           // Do nothing
           console.log("Nothing edited");
@@ -301,6 +311,71 @@ function updatedSubjectSelect() {
     .catch((error) => {
       console.log("Error getting document:", error);
     });
+}
+
+function fetchAllTasks(){
+users.doc(auth.currentUser.uid).collection("tasks").get().then(querySnapshot => {
+  querySnapshot.forEach(doc => {
+    taskDocuments.push(doc.id)
+    removeDuplicate(taskDocuments);
+    console.log("Updated Array:", taskDocuments)
+  })
+  updatedTaskDisplay()
+})
+
+}
+
+function updatedTaskDisplay() {
+for (i = 0; i < taskDocuments.length; i++) {
+  // Looping through each document in the colelction
+  users
+    .doc(auth.currentUser.uid)
+    .collection("tasks")
+    .doc(taskDocuments[i])
+    .get()
+    .then((doc) => {
+      // Each loop get the field values
+        var priority = doc.data().priority;
+        var subject = doc.data().subject;
+        var task = doc.data().task;
+        console.log(priority, subject, task);
+
+        // Creating the HTML Elements
+
+        var taskDiv = document.createElement("div");
+
+        taskDiv.setAttribute("id", task); // Setting Id to the Div
+        var completeTask = document.createElement("p");
+        var taskText = document.createElement("h2");
+        var priorityText = document.createElement("p");
+        var subjectText = document.createElement("p");
+        // Text Nodes
+        var nodeCompleteTask = document.createTextNode("✕");
+        var nodeTitle = document.createTextNode(task);
+        var nodePriority = document.createTextNode(
+          "Priority: ",
+          priority
+        );
+        var nodeSubject = document.createTextNode("Subject: ", subject);
+
+        // Appending everything together
+        taskText.appendChild(nodeTitle);
+        priorityText.appendChild(nodePriority);
+        subjectText.appendChild(nodeSubject);
+        completeTask.appendChild(nodeCompleteTask);
+
+        taskDiv.appendChild(taskText);
+        taskDiv.appendChild(completeTask);
+        taskDiv.appendChild(priorityText);
+        taskDiv.appendChild(subjectText);
+
+        var element = document.querySelector("#toDoList");
+
+        element.appendChild(taskDiv);
+
+        console.log(taskDiv);
+      });
+  }
 }
 
 // A general function that updates 'almost' everything on start of application \\
@@ -320,11 +395,14 @@ function updateOnStart() {
         option.appendChild(node);
         var element = document.querySelector("#subjectselect");
         element.appendChild(option);
-        console.log(option);
-        console.log("Nothing edited");
+        console.log("Created HTML elements: ", option);
       }
     })
     .catch((error) => {
       console.log("Error getting document:", error);
     });
+}
+
+function removeDuplicate(data){
+  return data.filter((value, index) => data.indexOf(value) === index);
 }

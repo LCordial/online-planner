@@ -30,10 +30,14 @@ function openTaskWindow() {
   }
 }
 
-function openEditSubjectWindow(){
-  if(isEditSubjectClicked === true){
+function openEditSubjectWindow() {
+  if (isEditSubjectClicked === true) {
+    editSubjectWindow.classList.remove("hidden");
+    btnOpenEditSubjectWindow.innerHTML = "Close Edit";
     isEditSubjectClicked = false;
-  } else if (isEditSubjectClicked = false){
+  } else if (isEditSubjectClicked === false) {
+    editSubjectWindow.classList.add("hidden");
+    btnOpenEditSubjectWindow.innerHTML = "Edit Subjects";
     isEditSubjectClicked = true;
   }
 }

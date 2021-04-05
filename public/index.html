@@ -53,6 +53,10 @@
 
                     <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
 
+                    <div id="toDoList">
+                        <h1>To Do</h1>
+                    </div>
+
                     <div id="addsubjectwindow">
                         <span onclick="openSubjectWindow()">&times</span>
                         <p>Add subject</p>
@@ -79,7 +83,13 @@
                 </div>
 
                 <div id="deletesubjectwindow">
-
+                    <span onclick="openEditSubjectWindow()">&times</span>
+                    <p>Edit Subjects</p>
+                    <select id="editsubjectselect" name="Edit">
+                        <option value="">Select Subject</option>
+                    </select>
+                    <input id="subjectEditInput"placeholder="New name">
+                    <button id="btnEditTask">Sumbit</button>
                 </div>
 
                 
