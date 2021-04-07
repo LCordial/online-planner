@@ -1,106 +1,129 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Planner in Progess</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Planner</title>
 
-        <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./main.css" />
 
-        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
 
-        <script src="js/window.js"></script>
+    <script src="js/window.js"></script>
 
-        <script src="config.js"></script>
+    <script src="js/config.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  </head>
 
-    <body>
-        <div>
-        <!-- <h1 class="title">In progress</h1> -->
-            <!-- <h1 class="title titleanimation noopacity">Welcome</h1> -->
+  <body>
+    <div>
+      <!-- <h1 class="title">In progress</h1> -->
+      <!-- <h1 class="title titleanimation noopacity">Welcome</h1> -->
 
-                <div id="loginPage" class="loginanimation">
-                    <h1 class="maintitle">Planner</h1>
-                    <div class="flexcontainer">
-                        <div id="inputPage" class="inputcontainer">
-                            <input type="email" placeholder="Email" id="emailInput" class="logininputs">
-                            <input type="password" placeholder="Password" id="passwordInput" class="logininputs">
-                            <input type="text" placeholder="Username" id="usernameInput" class="logininputs">
-                        </div>
-                        <div id="buttonPage" class="buttoncontainer"> 
-                            <button id="signInBtn" class="button">Sign In</button>
-                            <button id="signUpBtn" class="button loginanimation">Sign up</button>
-                        </div>
-                        <p id="signInError" class="red center"></p>
-                    </div>
-                </div>
+      <div id="loginPage" class="loginanimation">
+        <h1 class="maintitle">Planner</h1>
+        <div class="flexcontainer">
+          <div id="inputPage" class="inputcontainer">
+            <input
+              type="email"
+              placeholder="Email"
+              id="emailInput"
+              class="logininputs"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="passwordInput"
+              class="logininputs"
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              id="usernameInput"
+              class="logininputs"
+            />
+          </div>
+          <div id="buttonPage" class="buttoncontainer">
+            <button id="signInBtn" class="button">Sign In</button>
+            <button id="signUpBtn" class="button loginanimation">
+              Sign up
+            </button>
+          </div>
+          <p id="signInError" class="red center"></p>
+        </div>
+      </div>
 
-                <div id="appsidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a id="btnOpenSubjectWindow" onclick="openSubjectWindow()">Add subject</a>
-                    <a id="btnOpenEditSubjectWindow" onclick="openEditSubjectWindow()">Edit Subjects</a>
-                    <a id="openTaskWindowBtn" onclick="openTaskWindow()">Add task</a>
-                    <a id="signOutBtn">Log Out</a> 
-                </div>
+      <div id="appsidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+          >&times;</a
+        >
+        <a id="btnOpenSubjectWindow" onclick="openSubjectWindow()"
+          >Add subject</a
+        >
+        <!-- <a id="btnOpenEditSubjectWindow" onclick="openEditSubjectWindow()">Edit Subjects</a> -->
+        <a id="openTaskWindowBtn" onclick="openTaskWindow()">Add task</a>
+        <a id="signOutBtn">Log Out</a>
+      </div>
 
-                <div id="main">
-                    
-                    <p id="user">Undefined User</p>
+      <div id="main">
+        <p id="user">Undefined User</p>
 
-                    <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
+        <span id="burger" onclick="openNav()" class="box-shadow-menu"></span>
 
-                    <div id="toDoList">
-                        <h1>To Do</h1>
-                    </div>
+        <div id="toDoList">
+          <h1>To Do</h1>
+        </div>
 
-                    <div id="addsubjectwindow">
-                        <span onclick="openSubjectWindow()">&times</span>
-                        <p>Add subject</p>
-                        <input id="subjectInput" placeholder="Subject">
-                        <p id="subjectinputerror" class="red"></p>
-                        <button id="btnAddSubject">Submit</button>
-                    </div>
-                    
-                    <div id="addtaskwindow">
-                        <span onclick="openTaskWindow()">&times</span>
-                        <p>Add task</p>
-                        <input id="taskInput" placeholder="Task">
-                        <select id="priorityselect" name="Priority">
-                            <option value="!">Priority 3</option>
-                            <option value="!!">Priority 2</option>
-                            <option value="!!!">Priority 1</option>
-                        </select>
-                        <select id="subjectselect" name="Subject">
-                            <option value="">Select Subject</option>
-                        </select>
-                        <p id="taskinputerror" class="red"></p>
-                        <button id="btnAddTask">Submit</button>
-                    </div>
-                </div>
+        <div id="addsubjectwindow">
+          <span onclick="openSubjectWindow()">&times</span>
+          <p>Add subject</p>
+          <input id="subjectInput" placeholder="Subject" />
+          <p id="subjectinputerror" class="red"></p>
+          <button id="btnAddSubject">Submit</button>
+        </div>
 
-                <div id="deletesubjectwindow">
-                    <span onclick="openEditSubjectWindow()">&times</span>
-                    <p>Edit Subjects</p>
-                    <select id="editsubjectselect" name="Edit">
-                        <option value="">Select Subject</option>
-                    </select>
-                    <input id="subjectEditInput"placeholder="New name">
-                    <button id="btnEditTask">Sumbit</button>
-                </div>
+        <div id="addtaskwindow">
+          <span onclick="openTaskWindow()">&times</span>
+          <p>Add task</p>
+          <input id="taskInput" placeholder="Task" />
+          <select id="priorityselect" name="Priority">
+            <option value="!">Priority 3</option>
+            <option value="!!">Priority 2</option>
+            <option value="!!!">Priority 1</option>
+          </select>
+          <select id="subjectselect" name="Subject">
+            <option value="">Select Subject</option>
+          </select>
+          <p id="taskinputerror" class="red"></p>
+          <button id="btnAddTask">Submit</button>
+        </div>
+      </div>
 
-                
-                <div id="mainfooter" class="footer">
-                    <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
-                    <p>Released by <a href="https://github.com/Ambience-Studios">Ambience Studios</a></p>
-                </div> 
+      <div id="deletesubjectwindow">
+        <span onclick="openEditSubjectWindow()">&times</span>
+        <p>Edit Subjects</p>
+        <select id="editsubjectselect" name="Edit">
+          <option value="">Select Subject</option>
+        </select>
+        <input id="subjectEditInput" placeholder="New name" />
+        <button id="btnEditTask">Sumbit</button>
+      </div>
 
-        <script src="index.js"></script>
-        <script src="js/sidebar.js"></script>
-        <script src="js/moveable.js"></script>
+      <div id="mainfooter" class="footer">
+        <p>Developed by <a href="https://github.com/LCordial">Eli Bessen</a></p>
+        <p>
+          Released by
+          <a href="https://github.com/Ambience-Studios">Ambience Studios</a>
+        </p>
+      </div>
+    </div>
 
-    </body>
+    <script src="index.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/frontend.js"></script>
+  </body>
 </html>
