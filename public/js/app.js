@@ -121,12 +121,16 @@ function fetchAllTasks() {
         var taskDiv = document.createElement("div");
 
         taskDiv.setAttribute("id", task); // Setting Id to the Div
-        var completeTask = item.child;
+        var completeTaskUI = item.child;
+        // completeTask.onclick = completeTask(doc.id);
         var taskText = item.title;
         var priorityText = item.child;
         var subjectText = item.child;
         // Text Nodes
         var nodeCompleteTask = document.createTextNode("✕");
+        completeTaskUI.addEventListener("click", () => {
+          completeTask(doc.id);
+        });
         var nodeTitle = document.createTextNode(task);
         var nodePriority = document.createTextNode("Priority: ", priority);
         var nodeSubject = document.createTextNode("Subject: ", subject);
@@ -135,10 +139,10 @@ function fetchAllTasks() {
         taskText.appendChild(nodeTitle);
         priorityText.appendChild(nodePriority);
         subjectText.appendChild(nodeSubject);
-        completeTask.appendChild(nodeCompleteTask);
+        completeTaskUI.appendChild(nodeCompleteTask);
 
         taskDiv.appendChild(taskText);
-        taskDiv.appendChild(completeTask);
+        taskDiv.appendChild(completeTaskUI);
         taskDiv.appendChild(priorityText);
         taskDiv.appendChild(subjectText);
 
@@ -173,12 +177,15 @@ function addToDoTask() {
     var taskDiv = document.createElement("div");
 
     taskDiv.setAttribute("id", task); // Setting Id to the Div
-    var completeTask = item.child;
+    var completeTaskUI = item.child;
     var taskText = item.title;
     var priorityText = item.child;
     var subjectText = item.child;
     // Text Nodes
     var nodeCompleteTask = document.createTextNode("✕");
+    completeTaskUI.addEventListener("click", () => {
+      completeTask(task);
+    });
     var nodeTitle = document.createTextNode(task);
     var nodePriority = document.createTextNode("Priority: ", priority);
     var nodeSubject = document.createTextNode("Subject: ", subject);
@@ -187,10 +194,10 @@ function addToDoTask() {
     taskText.appendChild(nodeTitle);
     priorityText.appendChild(nodePriority);
     subjectText.appendChild(nodeSubject);
-    completeTask.appendChild(nodeCompleteTask);
+    completeTaskUI.appendChild(nodeCompleteTask);
 
     taskDiv.appendChild(taskText);
-    taskDiv.appendChild(completeTask);
+    taskDiv.appendChild(completeTaskUI);
     taskDiv.appendChild(priorityText);
     taskDiv.appendChild(subjectText);
 
@@ -200,6 +207,11 @@ function addToDoTask() {
 
     console.log(taskDiv);
   }
+}
+
+function removeToDo(p) {
+  var element = document.getElementById(p);
+  element.parentNode.removeChild(element);
 }
 
 // A general function that updates 'almost' everything on start of application \\
@@ -227,14 +239,16 @@ function updateSubjectOnStart() {
     });
 }
 
-function completeTask(task) {
+function completeTask(p) {
   users
     .doc(auth.currentUser.uid)
-    .collection("Tasks")
-    .doc(task)
+    .collection("tasks")
+    .doc(p)
     .delete()
     .then(() => {
-      console.log(task, " successfully deleted");
+      console.log(p, " successfully deleted");
+      taskDocuments.splice(p);
+      removeToDo(p);
     })
     .catch((error) => {
       console.error("Error deleting document: ", error);
@@ -247,4 +261,9 @@ function increaseKarma(amount) {
   users.doc(auth.currentUser.uid).collection("Karma").doc("User Karma").set({
     karma: amount,
   });
+}
+
+function removeAllToDo() {
+  var element = document.querySelector("#toDoList");
+  element.removeChild(element.firstChild);
 }

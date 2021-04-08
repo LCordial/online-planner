@@ -26,28 +26,31 @@
       <div id="loginPage" class="loginanimation">
         <h1 class="maintitle">Planner</h1>
         <div class="flexcontainer">
-          <div id="inputPage" class="inputcontainer">
-            <input
-              type="email"
-              placeholder="Email"
-              id="emailInput"
-              class="logininputs"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              id="passwordInput"
-              class="logininputs"
-            />
-            <input
-              type="text"
-              placeholder="Username"
-              id="usernameInput"
-              class="logininputs"
-            />
-          </div>
-          <div id="buttonPage" class="buttoncontainer">
-            <button id="signInBtn" class="button">Sign In</button>
+
+            <div id="inputPage" class="inputcontainer">
+              <input
+                type="email"
+                placeholder="Email"
+                id="emailInput"
+                class="logininputs"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                id="passwordInput"
+                class="logininputs"
+              />
+              <input
+                type="text"
+                placeholder="Username"
+                id="usernameInput"
+                class="logininputs"
+              />
+            </div>
+            <div id="buttonPage" class="buttoncontainer">
+              <button id="signInBtn" class="button">Sign In</button>
+          
+              <!-- <p>Don't have an account <a>Log Out</a></p> -->
             <button id="signUpBtn" class="button loginanimation">
               Sign up
             </button>
@@ -63,10 +66,29 @@
         <a id="btnOpenSubjectWindow" onclick="openSubjectWindow()"
           >Add subject</a
         >
-        <!-- <a id="btnOpenEditSubjectWindow" onclick="openEditSubjectWindow()">Edit Subjects</a> -->
+        <a id="btnOpenEditSubjectWindow" onclick="openEditSubjectWindow()"
+          >Edit Subjects</a
+        >
         <a id="openTaskWindowBtn" onclick="openTaskWindow()">Add task</a>
         <a id="signOutBtn">Log Out</a>
       </div>
+      <!-- <div class="navbar">
+        <ul class="navlink">
+          <li>
+            🧍 Add Subject
+          </li>
+          <li>
+            📝 Add Task
+          </li>
+          <li>
+            Log Out
+          </li>
+        </ul>
+        <div class="social-link">
+          <img class="send" alt="send" />
+          <img class="close" alt="close" />
+        </div>
+      </div> -->
 
       <div id="main">
         <p id="user">Undefined User</p>
@@ -122,8 +144,8 @@
     </div>
 
     <script src="index.js"></script>
+    <script src="js/frontend.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/frontend.js"></script>
   </body>
 </html>

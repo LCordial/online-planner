@@ -55,9 +55,16 @@ function openNav() {
 function closeNav() {
   document.getElementById("appsidenav").style.width = "0";
   document.getElementById("main").style.marginLeft = "0";
-  burger.classList.remove("hidden");
   // document.body.style.backgroundColor = "white";
 }
+
+// const navlink = document.querySelector('.navlink');
+// const sharelink = document.querySelector('.social-link');
+
+// navlink.addEventListener('click', function() {
+//     navlink.classList.toggle('active');
+//     sharelink.classList.toggle('active')
+// })
 
 $(function () {
   $("#addtaskwindow").draggable();

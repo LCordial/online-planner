@@ -22,7 +22,7 @@ btnSignUp.addEventListener("click", (e) => {
   let password = txtPassword.value;
 
   if (email.length == 0 || password.length < 6) {
-    signInError.innerHTML = "It needs an Email/Password";
+    signInError.innerHTML = "There was an error with email and password";
   } else {
     const promise = auth.createUserWithEmailAndPassword(email, password);
     fetchAllTasks();
@@ -34,6 +34,7 @@ btnSignUp.addEventListener("click", (e) => {
 btnSignOut.addEventListener("click", (e) => {
   firebase.auth().signOut();
   burger.classList.add("hidden");
+  removeAllToDo();
 });
 
 // Detecy when auth state changes
@@ -56,6 +57,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
         // If the user exists on the database...
         if (doc.exists) {
           console.log("Document data:", doc.data());
+          removeAllToDo();
           getUsername(); // Getting the username on login
           openNav(); // Opening the Nav bar on login
           updateSubjectOnStart(); // Updating subjects on start
@@ -85,6 +87,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     toDoList.classList.add("hidden");
 
     closeNav();
+    burger.classList.add("hidden");
   }
 });
 

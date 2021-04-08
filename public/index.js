@@ -56,6 +56,7 @@ addSubjectWindow.classList.add("hidden"); // Removing add subject window
 addTaskWindow.classList.add("hidden"); // Removing add task window
 editSubjectWindow.classList.add("hidden"); // Removing edit subject window
 toDoList.classList.add("hidden");
+burger.classList.add("hidden");
 
 // Firebase reference
 
