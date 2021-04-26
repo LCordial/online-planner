@@ -51,12 +51,18 @@ const btnOpenEditSubjectWindow = document.querySelector(
 
 let toDoList = document.querySelector("#toDoList");
 
+const createAccountBtn = document.querySelector("#createAccountBtn");
+const loginAccountBtn = document.querySelector("#loginAcountBtn");
+
 // Removing windows on start
 addSubjectWindow.classList.add("hidden"); // Removing add subject window
 addTaskWindow.classList.add("hidden"); // Removing add task window
 editSubjectWindow.classList.add("hidden"); // Removing edit subject window
 toDoList.classList.add("hidden");
 burger.classList.add("hidden");
+btnSignUp.classList.add("hidden")
+loginAccountBtn.classList.add("hidden");
+txtUsername.classList.add("hidden");
 
 // Firebase reference
 
@@ -64,3 +70,6 @@ const auth = firebase.auth(); // The authenticator for firebase
 const db = firebase.firestore(); // The firebase firestore database
 
 const users = db.collection("users"); // THe user collection
+
+const toDoTitle = document.querySelector("#toDoTitle")
+

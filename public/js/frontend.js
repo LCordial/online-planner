@@ -47,7 +47,6 @@ function openEditSubjectWindow() {
 function openNav() {
   document.getElementById("appsidenav").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
-  burger.classList.add("hidden");
   // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 

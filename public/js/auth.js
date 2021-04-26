@@ -4,7 +4,7 @@ btnSignIn.addEventListener("click", (e) => {
   let password = txtPassword.value;
 
   if (email.length == 0 || password.length == 0) {
-    signInError.innerHTML = "Incorrect Email/Password";
+    signInError.innerHTML = "You need to enter a password/email";
   } else {
     signInError.innerHTML = "";
     const promise = auth.signInWithEmailAndPassword(email, password);
@@ -48,6 +48,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     displayUser.classList.remove("hidden"); // Showing the display user
     footer.classList.add("hidden"); // Hiding the footer
     toDoList.classList.remove("hidden");
+    toDoTitle.classList.remove("hidden");
 
     // Check user exists in db
     users
@@ -57,7 +58,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
         // If the user exists on the database...
         if (doc.exists) {
           console.log("Document data:", doc.data());
-          removeAllToDo();
+          removeAllToDo(); // Removing all ToDo items
           getUsername(); // Getting the username on login
           openNav(); // Opening the Nav bar on login
           updateSubjectOnStart(); // Updating subjects on start
@@ -83,8 +84,8 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     burger.classList.add("hidden");
     displayUser.classList.add("hidden");
     loginPage.classList.remove("hidden");
-    btnSignUp.classList.remove("hidden");
     toDoList.classList.add("hidden");
+    toDoTitle.classList.add("hidden") 
 
     closeNav();
     burger.classList.add("hidden");
@@ -100,7 +101,7 @@ function writeUserToDB() {
   getUsername();
 
   users
-    .doc(uid)
+    .doc(auth.currentUser.uid)
     .set({
       // Write to db
       username: username,
