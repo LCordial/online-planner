@@ -1,6 +1,7 @@
-/node_modules
+node_modules/
 /.firebase
+public/functions/sendEmail.js
 
-/firebase-debug.log
+public/js/config.js
 
-/public/js/config.js
+firebase-debug.log

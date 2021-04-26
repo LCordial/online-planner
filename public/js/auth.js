@@ -19,9 +19,10 @@ btnSignIn.addEventListener("click", (e) => {
 btnSignUp.addEventListener("click", (e) => {
   // TODO: Check for real email.
   let email = txtEmail.value;
+  let parent = txtParentEmail.value;
   let password = txtPassword.value;
 
-  if (email.length == 0 || password.length < 6) {
+  if (email.length == 0 || password.length < 6 || parent.length == 0) {
     signInError.innerHTML = "There was an error with email and password";
   } else {
     const promise = auth.createUserWithEmailAndPassword(email, password);
@@ -35,6 +36,7 @@ btnSignOut.addEventListener("click", (e) => {
   firebase.auth().signOut();
   burger.classList.add("hidden");
   removeAllToDo();
+  location.reload();
 });
 
 // Detecy when auth state changes
@@ -49,6 +51,8 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     footer.classList.add("hidden"); // Hiding the footer
     toDoList.classList.remove("hidden");
     toDoTitle.classList.remove("hidden");
+    displayKarma.classList.remove("hidden");
+    txtParentEmail.classList.add("hidden");
 
     // Check user exists in db
     users
@@ -63,6 +67,7 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
           openNav(); // Opening the Nav bar on login
           updateSubjectOnStart(); // Updating subjects on start
           fetchAllTasks(); // Updating tasks on start
+          fetchKarma();
         } else {
           // If user doesn't exists on the databse...
           // Add user data to db
@@ -85,7 +90,9 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
     displayUser.classList.add("hidden");
     loginPage.classList.remove("hidden");
     toDoList.classList.add("hidden");
-    toDoTitle.classList.add("hidden") 
+    toDoTitle.classList.add("hidden");
+    displayKarma.classList.add("hidden");
+    txtParentEmail.classList.add("hidden");
 
     closeNav();
     burger.classList.add("hidden");
@@ -97,6 +104,7 @@ function writeUserToDB() {
   let username = txtUsername.value;
   let uid = auth.currentUser.uid;
   let email = txtEmail.value;
+  let parent = txtParentEmail.value;
 
   getUsername();
 
@@ -107,14 +115,26 @@ function writeUserToDB() {
       username: username,
       uid: uid,
       email: email,
+      parent: parent,
     })
     .then(() => {
       // If success
       console.log("Document successfully written!");
+      createBaseSubject();
     })
     .catch((error) => {
       // Catch errors
       console.error("Error writing document: ", error);
+    });
+}
+
+function createBaseSubject() {
+  users
+    .doc(auth.currentUser.uid)
+    .collection("subjects")
+    .doc("User Subjects")
+    .set({
+      subject: "Create a subject first",
     });
 }
 

@@ -239,6 +239,8 @@ function updateSubjectOnStart() {
     });
 }
 
+// Completing Task System
+
 function completeTask(p) {
   users
     .doc(auth.currentUser.uid)
@@ -249,39 +251,56 @@ function completeTask(p) {
       console.log(p, " successfully deleted");
       taskDocuments.splice(p);
       removeToDo(p);
+      karma++;
+      increaseKarma(karma);
     })
     .catch((error) => {
       console.error("Error deleting document: ", error);
     });
 }
 
+// Removing All ToDo items
+
 function removeAllToDo() {
-  const p = document.getElementById("toDoList")
+  const p = document.getElementById("toDoList");
   while (p.firstChild) {
-    p.removeChild(p.firstChild)
+    p.removeChild(p.firstChild);
   }
 }
 
 // Reward system
 
-function increaseKarma(amount) {
-  users.doc(auth.currentUser.uid).collection("Karma").doc("User Karma").set({
-    karma: amount,
-  });
+function fetchKarma() {
+  users
+    .doc(auth.currentUser.uid)
+    .collection("karma")
+    .doc("User Karma")
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        karma = doc.data().karma;
+        console.log("Karma: ", karma);
+        displayKarma.innerHTML = karma;
+      } else {
+        // If user doesn't exists on the databse...
+        console.log("Karma doesn't exist");
+        displayKarma.innerHTML = "0";
+      }
+    })
+    .catch((error) => {
+      console.log("Error fetching document: ", error);
+    });
 }
 
-createAccountBtn.addEventListener("click", (e) => {
-  btnSignUp.classList.remove("hidden");
-  loginAcountBtn.classList.remove("hidden");
-  createAccountBtn.classList.add("hidden");
-  btnSignIn.classList.add("hidden");
-  txtUsername.classList.remove("hidden");
-})
-
-loginAccountBtn.addEventListener("click", (e) => {
-  btnSignUp.classList.add("hidden");
-  loginAccountBtn.classList.add("hidden");
-  createAccountBtn.classList.remove("hidden");
-  btnSignIn.classList.remove("hidden");
-  txtUsername.classList.add("hidden");
-})
+function increaseKarma(amount) {
+  users
+    .doc(auth.currentUser.uid)
+    .collection("karma")
+    .doc("User Karma")
+    .set({
+      karma: amount,
+    })
+    .then(() => {
+      displayKarma.innerHTML = amount;
+    });
+}

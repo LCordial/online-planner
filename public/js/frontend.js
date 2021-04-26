@@ -70,3 +70,21 @@ $(function () {
   $("#addsubjectwindow").draggable();
   $("#deletesubjectwindow").draggable();
 });
+
+createAccountBtn.addEventListener("click", (e) => {
+  btnSignUp.classList.remove("hidden");
+  loginAcountBtn.classList.remove("hidden");
+  createAccountBtn.classList.add("hidden");
+  btnSignIn.classList.add("hidden");
+  txtUsername.classList.remove("hidden");
+  txtParentEmail.classList.remove("hidden");
+});
+
+loginAccountBtn.addEventListener("click", (e) => {
+  btnSignUp.classList.add("hidden");
+  loginAccountBtn.classList.add("hidden");
+  createAccountBtn.classList.remove("hidden");
+  btnSignIn.classList.remove("hidden");
+  txtUsername.classList.add("hidden");
+  txtParentEmail.classList.add("hidden");
+});

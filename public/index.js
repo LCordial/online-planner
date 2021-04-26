@@ -9,6 +9,7 @@ const footer = document.querySelector("#mainfooter");
 const txtEmail = document.querySelector("#emailInput"); // The email input
 const txtPassword = document.querySelector("#passwordInput"); // The password input
 const txtUsername = document.querySelector("#usernameInput"); // The username input
+const txtParentEmail = document.querySelector("#parentEmailInput"); // The Parent Email Input
 const btnSignIn = document.querySelector("#signInBtn"); // The sign in button
 const btnSignUp = document.querySelector("#signUpBtn"); // The sign up button
 const btnSignOut = document.querySelector("#signOutBtn"); // The sign out button
@@ -20,6 +21,7 @@ let userDisplay = document.querySelector("#user"); // The username display name
 let burger = document.querySelector("#burger"); // The burger that opens and closes the side navbar
 let displayUser = document.querySelector("#user"); // The display user
 let signInError = document.querySelector("#signInError"); // The sign in error text
+let displayKarma = document.querySelector("#displayKarma");
 
 // Nav Bar
 const btnOpenSubjectWindow = document.querySelector("#btnOpenSubjectWindow"); // Open subject window
@@ -60,7 +62,7 @@ addTaskWindow.classList.add("hidden"); // Removing add task window
 editSubjectWindow.classList.add("hidden"); // Removing edit subject window
 toDoList.classList.add("hidden");
 burger.classList.add("hidden");
-btnSignUp.classList.add("hidden")
+btnSignUp.classList.add("hidden");
 loginAccountBtn.classList.add("hidden");
 txtUsername.classList.add("hidden");
 
@@ -71,5 +73,6 @@ const db = firebase.firestore(); // The firebase firestore database
 
 const users = db.collection("users"); // THe user collection
 
-const toDoTitle = document.querySelector("#toDoTitle")
+const toDoTitle = document.querySelector("#toDoTitle");
 
+let karma = 0;
